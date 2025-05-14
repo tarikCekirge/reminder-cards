@@ -40,7 +40,7 @@ const AddReminder = () => {
   };
 
   return (
-    <div className="p-3 bg-slate-300 rounded-md mb-4">
+    <div className="p-3 bg-slate-300 dark:bg-slate-800 rounded-md mb-4">
       <form
         onSubmit={handleSubmit}
         ref={formRef}
@@ -49,19 +49,19 @@ const AddReminder = () => {
         <input
           type="text"
           name="title"
-          className="border p-3 rounded-md focus:outline-none border-slate-600"
+          className="border p-3 rounded-md focus:outline-none border-slate-600 dark:border-slate-300 dark:text-slate-100 dark:placeholder:text-slate-500"
           placeholder="Başlık"
         />
         <textarea
           name="body"
-          className="border p-3 rounded-md focus:outline-none border-slate-600 field-sizing-content"
+          className="border p-3 rounded-md focus:outline-none border-slate-600 field-sizing-content dark:border-slate-300 dark:text-slate-100 dark:placeholder:text-slate-500"
           placeholder="Not"
         />
         <button
           type="submit"
           ref={buttonRef}
           disabled
-          className="bg-slate-800 p-4 disabled:bg-slate-500 hover:bg-slate-700 text-white font-bold rounded-md cursor-pointer disabled:cursor-auto"
+          className="bg-slate-800 dark:bg-slate-950 p-4 disabled:bg-slate-500 hover:bg-slate-700 text-white font-bold rounded-md cursor-pointer disabled:cursor-auto"
         >
           Ekle
         </button>

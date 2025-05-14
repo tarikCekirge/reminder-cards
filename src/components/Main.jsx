@@ -4,10 +4,10 @@ import AddReminder from './AddReminder'
 
 const Main = () => {
     return (
-        <section className='container py-4'>
+        <main className='container py-4 flex-1'>
             <AddReminder />
             <Posts />
-        </section>
+        </main>
     )
 }
 

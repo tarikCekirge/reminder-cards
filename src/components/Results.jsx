@@ -10,7 +10,7 @@ const Results = () => {
             )
             : state.posts;
 
-    return <p className="text-sm font-semibold">🚀 {searchedPosts.length} Post Bulundu</p>;
+    return <p className="text-sm font-semibold dark:text-slate-500">🚀 {searchedPosts.length} Post</p>;
 }
 
 export default Results
