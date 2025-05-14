@@ -6,6 +6,7 @@
   --font-roboto: "Roboto", sans-serif;
   --font-montserrat: "Montserrat", sans-serif;
 }
+@custom-variant dark (&:where(.dark, .dark *));
 
 @utility container {
   margin-inline: auto;

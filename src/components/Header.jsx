@@ -1,4 +1,5 @@
 import { usePost } from '../contexts/PostContext'
+import DarkModeToggle from './DarkModeToggle'
 import Results from './Results'
 import SearchPosts from './SearchPosts'
 
@@ -6,6 +7,7 @@ const Header = () => {
     const { handleClearPosts } = usePost()
     return (
         <header className='bg-slate-500 font-montserrat gap-3'>
+            <DarkModeToggle />
             <nav className='container flex py-4 items-center'>
                 <h1 className='text-white font-black mr-auto'><span className='text-slate-300'>REMINDER</span>CARDS</h1>
                 <div className='flex gap-3 items-center'>

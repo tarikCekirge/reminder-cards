@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer, useEffect } from 'react';
+import { createContext, useContext, useReducer, useLayoutEffect } from 'react';
 import { faker } from '@faker-js/faker';
 
 function createRandomPost() {
@@ -8,11 +8,19 @@ function createRandomPost() {
     };
 }
 
+const getInitialDarkMode = () => {
+    const saved = localStorage.getItem("darkMode");
+    if (saved !== null) return JSON.parse(saved);
+    return window.matchMedia?.("(prefers-color-scheme: dark)")?.matches || false;
+};
+
+
+
 const initialState = {
     posts: Array.from({ length: 50 }, () => createRandomPost()),
     archivePosts: Array.from({ length: 50 }, () => createRandomPost()),
     searchQuery: "",
-    isFakeDark: false,
+    isDarkMode: getInitialDarkMode(),
     showArchive: false,
 };
 
@@ -25,7 +33,7 @@ function reducer(state, action) {
         case "SET_SEARCH_QUERY":
             return { ...state, searchQuery: action.payload };
         case "TOGGLE_DARK_MODE":
-            return { ...state, isFakeDark: !state.isFakeDark };
+            return { ...state, isDarkMode: !state.isDarkMode };
         case "TOGGLE_ARCHIVE":
             return { ...state, showArchive: !state.showArchive };
         default:
@@ -38,9 +46,11 @@ const PostContext = createContext();
 export const PostProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
 
-    useEffect(() => {
-        document.documentElement.classList.toggle("fake-dark-mode", state.isFakeDark);
-    }, [state.isFakeDark]);
+    useLayoutEffect(() => {
+        const isDark = state.isDarkMode;
+        document.documentElement.classList.toggle("dark", isDark);
+        localStorage.setItem("darkMode", JSON.stringify(isDark));
+    }, [state.isDarkMode]);
 
     const handleAddPost = (post) => {
         dispatch({ type: 'ADD_POST', payload: post });
