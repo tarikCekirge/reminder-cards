@@ -1,13 +1,19 @@
 import React from 'react'
+import Header from './components/Header'
+import Main from './components/Main'
+import Archive from './components/Archive'
+import Footer from './components/Footer'
 
 const App = () => {
   return (
-    <div>
-
-      <h1 class="text-3xl font-bold underline">
-        Hello world!
-      </h1>
-    </div>
+    <>
+      <section className='flex flex-col min-h-screen'>
+        <Header />
+        <Main />
+        <Archive />
+        <Footer />
+      </section>
+    </>
   )
 }
 
