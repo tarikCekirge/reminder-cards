@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer, useLayoutEffect, useCallback } from 'react';
+import { createContext, useContext, useReducer, useLayoutEffect, useCallback, useMemo } from 'react';
 import { faker } from '@faker-js/faker';
 
 function createRandomPost() {
@@ -16,7 +16,7 @@ const getInitialDarkMode = () => {
 
 const getInitialState = () => ({
     posts: Array.from({ length: 50 }, () => createRandomPost()),
-    archivePosts: Array.from({ length: 10000 }, () => createRandomPost()),
+    archivePosts: Array.from({ length: 1000 }, () => createRandomPost()),
     searchQuery: "",
     isDarkMode: getInitialDarkMode(),
     showArchive: false,
@@ -42,7 +42,7 @@ function reducer(state, action) {
 const PostContext = createContext();
 
 export const PostProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(reducer, null, getInitialState);
+    const [state, dispatch] = useReducer(reducer, getInitialState());
 
     useLayoutEffect(() => {
         const isDark = state.isDarkMode;
@@ -50,37 +50,51 @@ export const PostProvider = ({ children }) => {
         localStorage.setItem("darkMode", JSON.stringify(isDark));
     }, [state.isDarkMode]);
 
-    const handleAddPost = useCallback((post) => {
+    const handleAddPost = (post) => {
         dispatch({ type: 'ADD_POST', payload: post });
-    }, []);
+    }
 
     const handleClearPosts = () => {
         dispatch({ type: 'CLEAR_POSTS' });
-    };
+    }
 
     const setSearchQuery = (query) => {
         dispatch({ type: 'SET_SEARCH_QUERY', payload: query });
-    };
+    }
 
-    const toggleDarkMode = () => {
+    const toggleDarkMode = useCallback(() => {
         dispatch({ type: 'TOGGLE_DARK_MODE' });
-    };
+    }, []);
 
-    const toggleArchive = () => {
+    const toggleArchive = useCallback(() => {
         dispatch({ type: 'TOGGLE_ARCHIVE' });
-    };
+    }, []);
 
-    const values = {
+    // const values = {
+    //     state,
+    //     handleAddPost,
+    //     handleClearPosts,
+    //     setSearchQuery,
+    //     toggleDarkMode,
+    //     toggleArchive,
+    // };
+
+    const value = useMemo(() => {
+        return {
+            state,
+            handleAddPost,
+            handleClearPosts,
+            setSearchQuery,
+            toggleDarkMode,
+            toggleArchive
+        }
+    }, [
         state,
-        handleAddPost,
-        handleClearPosts,
-        setSearchQuery,
         toggleDarkMode,
-        toggleArchive,
-    };
-
+        toggleArchive
+    ])
     return (
-        <PostContext.Provider value={values}>
+        <PostContext.Provider value={value}>
             {children}
         </PostContext.Provider>
     );

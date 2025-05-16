@@ -19,11 +19,11 @@ const Posts = () => {
 
     return (
         <div className='grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'>
-            {filteredPosts.map((post, index) => (
-                <Card key={index} title={post.title} body={post.body} />
+            {filteredPosts.map((post) => (
+                <Card key={post.id} title={post.title} body={post.body} />
             ))}
         </div>
     );
 };
 
-export default Posts;
+export default React.memo(Posts);

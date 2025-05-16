@@ -10,7 +10,7 @@ const ListItem = React.memo(({ post, onAdd }) => {
             </p>
             <button
                 onClick={() => onAdd(post)}
-                className='text-xs text-blue-500 mt-1'
+                className='text-xs font-bold cursor-pointer border-b text-gray-700 dark:text-gray-500 mt-1'
             >
                 Yeni Notlara Ekle
             </button>

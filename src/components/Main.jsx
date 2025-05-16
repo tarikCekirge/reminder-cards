@@ -1,7 +1,7 @@
-import React from 'react'
-import Posts from './Posts'
-import AddReminder from './AddReminder'
-import Archive from './Archive'
+import React from 'react';
+import Posts from './Posts';
+import AddReminder from './AddReminder';
+import Archive from './Archive';
 
 const Main = () => {
     return (
@@ -10,7 +10,7 @@ const Main = () => {
             <Posts />
             <Archive />
         </main>
-    )
-}
+    );
+};
 
-export default Main
+export default React.memo(Main);
