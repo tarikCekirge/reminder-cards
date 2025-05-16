@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer, useLayoutEffect } from 'react';
+import { createContext, useContext, useReducer, useLayoutEffect, useCallback } from 'react';
 import { faker } from '@faker-js/faker';
 
 function createRandomPost() {
@@ -14,15 +14,13 @@ const getInitialDarkMode = () => {
     return window.matchMedia?.("(prefers-color-scheme: dark)")?.matches || false;
 };
 
-
-
-const initialState = {
+const getInitialState = () => ({
     posts: Array.from({ length: 50 }, () => createRandomPost()),
-    archivePosts: Array.from({ length: 50 }, () => createRandomPost()),
+    archivePosts: Array.from({ length: 10000 }, () => createRandomPost()),
     searchQuery: "",
     isDarkMode: getInitialDarkMode(),
     showArchive: false,
-};
+});
 
 function reducer(state, action) {
     switch (action.type) {
@@ -44,7 +42,7 @@ function reducer(state, action) {
 const PostContext = createContext();
 
 export const PostProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(reducer, initialState);
+    const [state, dispatch] = useReducer(reducer, null, getInitialState);
 
     useLayoutEffect(() => {
         const isDark = state.isDarkMode;
@@ -52,9 +50,9 @@ export const PostProvider = ({ children }) => {
         localStorage.setItem("darkMode", JSON.stringify(isDark));
     }, [state.isDarkMode]);
 
-    const handleAddPost = (post) => {
+    const handleAddPost = useCallback((post) => {
         dispatch({ type: 'ADD_POST', payload: post });
-    };
+    }, []);
 
     const handleClearPosts = () => {
         dispatch({ type: 'CLEAR_POSTS' });
@@ -95,4 +93,3 @@ export const usePost = () => {
     }
     return context;
 };
-
